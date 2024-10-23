@@ -1,0 +1,35 @@
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .sandwich {
+            display: flex;
+            flex-direction: column;
+            height: 100vh; /* ความสูงเต็มหน้าจอ */
+        }
+
+        .layer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+        }
+
+        /* เลเยอร์ด้านบน */
+        .top-layer {
+            background-color: #3498db; /* สีฟ้า */
+            flex: 1; /* การใช้พื้นที่ของแต่ละเลเยอร์ */
+        }
+
+        /* เลเยอร์กลาง */
+        .middle-layer {
+            background-color: #2ecc71; /* สีเขียว */
+            flex: 1;
+        }
+
+        /* เลเยอร์ล่าง */
+        .bottom-layer {
+            background-color: #e74c3c; /* สีแดง */
+            flex: 1;
+        }
