@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice : Souffler dans le ballon</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+
+        #balloon {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            border-radius: 50%;
+            transition: width 0.4s ease, height 0.4s ease, background-color 0.4s ease;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #balloon:hover {
+            cursor: pointer;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div id="balloon" aria-label="Balloon" role="button" tabindex="0"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            let size = 200;
+            let colors = ['red', 'green', 'blue'];
+            let colorIndex = 0;
+            let exploding = false;
+
+            // Function to handle balloon click
+            $('#balloon').on('click', function() {
+                if (exploding) return; // Prevent interaction if exploding
+
+                $(this).css('animation', 'bounce 0.5s ease');
+
+                size += 10;
+                $(this).css({
+                    'width': size + 'px',
+                    'height': size + 'px',
+                });
+
+                colorIndex = (colorIndex + 1) % colors.length;
+                $(this).css('background-color', colors[colorIndex]);
+
+                if (size > 420) {
+                    alert('Le ballon a explosé !');
+                    exploding = true; // Disable further clicks
+                    resetBalloon($(this));
+                }
+
+                setTimeout(() => {
+                    $(this).css('animation', '');
+                }, 500);
+            });
+
+            // Function to handle mouse leave
+            $('#balloon').on('mouseleave', function() {
+                if (size > 200) {
+                    size -= 5;
+                    $(this).css({
+                        'width': size + 'px',
+                        'height': size + 'px',
+                    });
+
+                    colorIndex = (colorIndex - 1 + colors.length) % colors.length;
+                    $(this).css('background-color', colors[colorIndex]);
+                }
+            });
+
+            // Keyboard interaction
+            $('#balloon').on('keypress', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    $(this).click();
+                }
+            });
+
+            // Function to reset the balloon
+            function resetBalloon(balloon) {
+                size = 200;
+                colorIndex = 0;
+                balloon.css({
+                    'width': size + 'px',
+                    'height': size + 'px',
+                    'background-color': 'red',
+                });
+
+                setTimeout(() => {
+                    exploding = false; // Re-enable clicks after reset
+                }, 1000); // Delay before allowing clicks again
+            }
+        });
+    </script>
+</body>
+</html>
