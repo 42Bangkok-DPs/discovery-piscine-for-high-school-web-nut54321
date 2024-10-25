@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balloon</title>
+    <style>
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            flex-direction: column-reverse;
+        }
+
+        .balloon {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            transition: width 0.2s, height 0.2s; /* Smooth transitions */
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .blue {
+            background-color: blue;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="balloon red" id="balloon"></div>
+
+    <script>
+        $(document).ready(function () {
+            $('#balloon').on('click', function () {
+                const balloon = $(this);
+                colorPlus(balloon);
+                
+                let width = balloon.width();
+                if (width < 420) {
+                    balloon.width(width + 10);
+                    balloon.height(balloon.height() + 10);
+                } else { // Reset if exploding
+                    balloon.width(200);
+                    balloon.height(200);
+                }
+            });
+
+            $('#balloon').on('mouseleave', function () {
+                const balloon = $(this);
+                colorLess(balloon);
+                balloon.width(Math.max(200, balloon.width() - 5));
+                balloon.height(Math.max(200, balloon.height() - 5));
+            });
+        });
+
+        function colorPlus(balloon) {
+            if (balloon.hasClass("red")) {
+                balloon.removeClass("red").addClass("green");
+            } else if (balloon.hasClass("green")) {
+                balloon.removeClass("green").addClass("blue");
+            } else if (balloon.hasClass("blue")) {
+                balloon.removeClass("blue").addClass("red");
+            }
+        }
+
+        function colorLess(balloon) {
+            if (balloon.hasClass("red")) {
+                balloon.removeClass("red").addClass("blue");
+            } else if (balloon.hasClass("blue")) {
+                balloon.removeClass("blue").addClass("green");
+            } else if (balloon.hasClass("green")) {
+                balloon.removeClass("green").addClass("red");
+            }
+        }
+    </script>
+</body>
+
+</html>
