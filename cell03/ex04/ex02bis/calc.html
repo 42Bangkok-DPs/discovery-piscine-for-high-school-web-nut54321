@@ -24,6 +24,7 @@
     <script>
         $(document).ready(function() {
             const INT_MAX = 2147483647;
+             const INT_MIN = -2147483647;
 
             $('#calculate').on('click', function() {
                 // ตัดช่องว่างด้านหน้าและด้านหลังออก และแปลงเป็นจำนวนเต็ม
@@ -81,6 +82,13 @@ if (result > INT_MAX) {
     alert("Result: " + result);
     console.log("Result:", result);
 }
+      if (result < INT_MIN) {
+    alert("Error :(");
+    console.log("Error :(");
+} else {
+    alert("Result: " + result);
+    console.log("Result:", result);
+}          
 });
 
 // ตั้งค่าให้แสดงข้อความทุก 30 วินาที
