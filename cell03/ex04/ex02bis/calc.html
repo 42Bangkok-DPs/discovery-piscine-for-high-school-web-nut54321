@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Basic Calculator</h1>
+    <input type="text" id="leftOperand" placeholder="Enter left number">
+    
+    <select id="operator">
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="*">*</option>
+        <option value="/">/</option>
+        <option value="%">%</option>
+    </select>
+
+    <input type="text" id="rightOperand" placeholder="Enter right number">
+    <button id="calculate">Try me!</button>
+
+    <script>
+        $(document).ready(function() {
+            const INT_MAX = 2147483647;
+
+            $('#calculate').on('click', function() {
+                // ตัดช่องว่างด้านหน้าและด้านหลังออก และแปลงเป็นจำนวนเต็ม
+                const leftOperand = parseInt($('#leftOperand').val().trim());
+                const rightOperand = parseInt($('#rightOperand').val().trim());
+                const operator = $('#operator').val();
+
+                // ตรวจสอบว่าค่าที่ใส่ถูกต้องหรือไม่ (ต้องไม่เป็น NaN และมากกว่าหรือเท่ากับ 0)
+                if (isNaN(leftOperand) || isNaN(rightOperand) || leftOperand < 0 || rightOperand < 0) {
+                    alert("Error :(");
+                    console.log("Error :(");
+                    return;
+                }
+
+                let result;
+
+                // คำนวณตาม operator ที่เลือก
+                switch (operator) {
+                    case "+":
+                        result = leftOperand + rightOperand;
+                        break;
+                    case "-":
+                        result = leftOperand - rightOperand;
+                        break;
+                    case "*":
+                        result = leftOperand * rightOperand;
+                        break;
+                    case "/":
+                        if (rightOperand === 0) {
+                            alert("It's over 9000!");
+                            console.log("It's over 9000!");
+                            return;
+                        }
+                        result = leftOperand / rightOperand;
+                        break;
+                    case "%":
+                        if (rightOperand === 0) {
+                            alert("It's over 9000!");
+                            console.log("It's over 9000!");
+                            return;
+                        }
+                        result = leftOperand % rightOperand;
+                        break;
+                    default:
+                        alert("Error :(");
+                        console.log("Error :(");
+                        return;
+                      }
+
+// ตรวจสอบว่าผลลัพธ์เกิน INT_MAX หรือไม่
+if (result > INT_MAX) {
+    alert("Error :(");
+    console.log("Error :(");
+} else {
+    alert("Result: " + result);
+    console.log("Result:", result);
+}
+});
+
+// ตั้งค่าให้แสดงข้อความทุก 30 วินาที
+setInterval(function() {
+alert("Please, use me...");
+}, 30000);
+});
+</script>
+</body>
+</html>
